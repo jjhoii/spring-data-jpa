@@ -38,4 +38,9 @@ class CommentRepositoryTest {
     assertThat(one.getComment()).isEqualTo("comment");
     assertThat(one.getPost().getTitle()).isEqualTo("Spring Data JPA");
   }
+
+  @Test
+  public void getSomeComment() {
+    commentRepository.findByPost_Id(1l);
+  }
 }
