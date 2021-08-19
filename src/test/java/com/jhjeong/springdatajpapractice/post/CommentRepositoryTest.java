@@ -3,6 +3,7 @@ package com.jhjeong.springdatajpapractice.post;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,25 @@ class CommentRepositoryTest {
 
   @Test
   public void getSomeComment() {
-    commentRepository.findByPost_Id(1l);
+    // given
+    Post post = new Post();
+    post.setTitle("title");
+    Post savedPost = postRepository.save(post);
+
+    Comment comment = new Comment();
+    comment.setComment("comment");
+    comment.setUp(10);
+    comment.setDown(5);
+    comment.setBest(true);
+    commentRepository.save(comment);
+
+    // when
+    commentRepository.findByPost_Id(savedPost.getId()).forEach(commentSummary -> {
+      // then
+      assertThat(commentSummary.getComment()).isEqualTo("comment");
+      assertThat(commentSummary.getUp()).isEqualTo(10);
+      assertThat(commentSummary.getDown()).isEqualTo(5);
+      assertThat(commentSummary.getVotes()).isEqualTo("10 5");
+    });
   }
 }
