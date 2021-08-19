@@ -55,7 +55,7 @@ class CommentRepositoryTest {
     commentRepository.save(comment);
 
     // when
-    commentRepository.findByPost_Id(savedPost.getId()).forEach(commentSummary -> {
+    commentRepository.findByPost_Id(savedPost.getId(), CommentSummary.class).forEach(commentSummary -> {
       // then
       assertThat(commentSummary.getComment()).isEqualTo("comment");
       assertThat(commentSummary.getUp()).isEqualTo(10);
