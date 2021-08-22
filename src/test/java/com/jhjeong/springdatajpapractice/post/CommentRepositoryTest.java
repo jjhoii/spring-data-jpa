@@ -3,15 +3,16 @@ package com.jhjeong.springdatajpapractice.post;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
+import javax.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@DataJpaTest
+@SpringBootTest
 class CommentRepositoryTest {
 
   @Autowired
@@ -20,7 +21,14 @@ class CommentRepositoryTest {
   @Autowired
   private PostRepository postRepository;
 
+  @BeforeEach
+  public void clear() {
+    commentRepository.deleteAll();
+    postRepository.deleteAll();
+  }
+
   @Test
+  @Transactional
   public void getComment() {
     // given
     Post post = new Post();
