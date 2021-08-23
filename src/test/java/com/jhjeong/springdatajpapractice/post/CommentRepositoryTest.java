@@ -63,12 +63,13 @@ class CommentRepositoryTest {
     commentRepository.save(comment);
 
     // when
-    commentRepository.findByPost_Id(savedPost.getId(), CommentSummary.class).forEach(commentSummary -> {
-      // then
-      assertThat(commentSummary.getComment()).isEqualTo("comment");
-      assertThat(commentSummary.getUp()).isEqualTo(10);
-      assertThat(commentSummary.getDown()).isEqualTo(5);
-      assertThat(commentSummary.getVotes()).isEqualTo("10 5");
-    });
+    commentRepository.findByPost_Id(savedPost.getId(), CommentSummary.class)
+        .forEach(commentSummary -> {
+          // then
+          assertThat(commentSummary.getComment()).isEqualTo("comment");
+          assertThat(commentSummary.getUp()).isEqualTo(10);
+          assertThat(commentSummary.getDown()).isEqualTo(5);
+          assertThat(commentSummary.getVotes()).isEqualTo("10 5");
+        });
   }
 }
